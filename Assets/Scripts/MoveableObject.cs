@@ -11,9 +11,6 @@ public class MoveableObject : MonoBehaviour
     // Public Fields
     public (int, int) Index;
 
-    // Events
-    public event Action<MoveableObject> ObjectDropped;
-
     // Private Fields
     private Draggable movement;
     private SpriteRenderer spriteRenderer;
@@ -44,17 +41,6 @@ public class MoveableObject : MonoBehaviour
         movement.Released -= HandleReleased;
     }
 
-
-    // Public Methods
-    public void DropOnPosition(Vector3 position, (int, int) index) 
-    {
-        // set layer back to one
-        spriteRenderer.sortingOrder = 1;
-
-        Index = index;
-        movement.Drop(position);
-    }
-
     // Event Handlers
     private void HandleStartDrag()
     {
@@ -64,7 +50,17 @@ public class MoveableObject : MonoBehaviour
 
     private void HandleReleased(Vector3 position)
     {
-        // send out an action with this object, then the board directs it to drop
-        ObjectDropped?.Invoke(this);
+        // get the index and new position from the board
+        //Vector3 localPosition = transform.InverseTransformPoint(position);
+        (int, int) index = Board.Instance.GetIndex(position);
+        Debug.Log($"index: {index}");
+
+        Vector3 newPosition = Board.Instance.GetPosition(index);
+
+        Index = index;
+        movement.Drop(newPosition);
+
+        // set layer back to one
+        spriteRenderer.sortingOrder = 1;
     }
 }
