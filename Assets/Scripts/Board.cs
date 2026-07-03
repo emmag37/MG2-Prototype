@@ -1,9 +1,17 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class Board : MonoBehaviour
 {
+    // Constants
+    private const int NumRows = 8;
+    private const int NumCols = 6;
+
     // Public Fields
     public static Board Instance;
+
+    // Inspector Fields
+    [SerializeField] private MoveableObject[] moveableObjects = new MoveableObject[NumRows * NumCols]; // holds references to all objects currently on the board
 
     // Private Fields
     private BoardGeometry boardGeometry;
@@ -12,20 +20,37 @@ public class Board : MonoBehaviour
     void Awake()
     {
         Instance = this;
-        boardGeometry = new BoardGeometry(8, 6, GetComponent<SpriteRenderer>().bounds, transform.position);
+        boardGeometry = new BoardGeometry(NumRows, NumCols, GetComponent<SpriteRenderer>().bounds, transform.position);
+
+        // Subscribe to all the currently set moveable objects
+        foreach (MoveableObject obj in moveableObjects)
+        {
+            if (obj != null)
+                obj.MovObjReleased += HandleMovObjReleased;
+        }
     }
 
-    // Public Methods
-
-    // takes the postion local to the board
-    public (int, int) GetIndex(Vector3 position)
+    void OnDestroy()
     {
-        return boardGeometry.TransformToBoardIndex(position);
+        // Unsubscribe to all the currently set moveable objects
+        foreach (MoveableObject obj in moveableObjects)
+        {
+            if (obj != null)
+                obj.MovObjReleased -= HandleMovObjReleased;
+        }
     }
 
-    // returns the position local to the board
-    public Vector3 GetPosition((int, int) index)
+
+    // Event Handlers
+    private void HandleMovObjReleased(MoveableObject obj, Vector3 position)
     {
-        return boardGeometry.BoardIndexToTransform(index);
+        Vector2Int index = boardGeometry.TransformToBoardIndex(position);
+
+        // check and see if that index is filled
+
+        Vector3 newPosition = boardGeometry.BoardIndexToTransform(index);
+
+        obj.DropOnPosition(index, newPosition);
     }
+
 }

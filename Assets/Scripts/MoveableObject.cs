@@ -9,7 +9,10 @@ using System;
 public class MoveableObject : MonoBehaviour
 {
     // Public Fields
-    public (int, int) Index;
+    public Vector2Int Index;
+
+    // Events
+    public event Action<MoveableObject, Vector3> MovObjReleased;
 
     // Private Fields
     private Draggable movement;
@@ -41,6 +44,18 @@ public class MoveableObject : MonoBehaviour
         movement.Released -= HandleReleased;
     }
 
+    // Public Methods
+    public void DropOnPosition(Vector2Int index, Vector3 position)
+    {
+        Debug.Log($"index: {index}, position: {position}");
+
+        Index = index;
+        movement.Drop(position);
+
+        // set layer back to one
+        spriteRenderer.sortingOrder = 1;
+    }
+
     // Event Handlers
     private void HandleStartDrag()
     {
@@ -50,17 +65,7 @@ public class MoveableObject : MonoBehaviour
 
     private void HandleReleased(Vector3 position)
     {
-        // get the index and new position from the board
-        //Vector3 localPosition = transform.InverseTransformPoint(position);
-        (int, int) index = Board.Instance.GetIndex(position);
-        Debug.Log($"index: {index}");
-
-        Vector3 newPosition = Board.Instance.GetPosition(index);
-
-        Index = index;
-        movement.Drop(newPosition);
-
-        // set layer back to one
-        spriteRenderer.sortingOrder = 1;
+        Debug.Log("obj released");
+        MovObjReleased?.Invoke(this, position);
     }
 }

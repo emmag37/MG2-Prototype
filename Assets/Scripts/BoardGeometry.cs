@@ -52,12 +52,12 @@ public class BoardGeometry
 	/// </summary>
 	/// <param name="position">Transform in world coordinates</param>
 	/// <returns>The board index (row, col) corresponding to the board array.</returns>
-    public (int, int) TransformToBoardIndex(Vector3 position)
+    public Vector2Int TransformToBoardIndex(Vector3 position)
     {
         int r = Mathf.Clamp(Mathf.RoundToInt((zeroY - position.y) / cellWidth), 0, numRows - 1);
         int c = Mathf.Clamp(Mathf.RoundToInt((position.x - zeroX) / cellWidth), 0, numCols - 1);
 
-        return (r, c);
+        return new Vector2Int(r, c);
     }
 
     /// <summary>
@@ -65,14 +65,14 @@ public class BoardGeometry
 	/// </summary>
 	/// <param name="index">Board index of the cell, (row, col).</param>
 	/// <returns>The world positon of the cell.</returns>
-    public Vector3 BoardIndexToTransform((int, int) index)
+    public Vector3 BoardIndexToTransform(Vector2Int index)
     {
         Vector3 newTransform = Vector3.zero;
 
         // this y value is not right
 
-        newTransform.x = zeroX + index.Item2 * cellWidth;
-        newTransform.y = zeroY - index.Item1 * cellWidth;
+        newTransform.x = zeroX + index.y * cellWidth;
+        newTransform.y = zeroY - index.x * cellWidth;
 
         return newTransform;
     }
