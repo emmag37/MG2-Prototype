@@ -5,6 +5,9 @@ public class Spawner : MonoBehaviour
 {
     // this needs to spawn items when tapped/clicked
 
+    // Inspector Fields
+    [SerializeField] Item spawnableItem;
+
     // Private Fields
     private MoveableObject moveable;
 
