@@ -16,8 +16,6 @@ public class Spawner : MoveableObject
     // Event Handlers
     protected override void HandleTap()
     {
-        Debug.Log("spawner tapped");
-
         SpawnItem();
     }
 
@@ -25,13 +23,12 @@ public class Spawner : MoveableObject
     // spawns item on top of parent then animates to spot on the board
     private void SpawnItem()
     {
-        Debug.Log("spawn item");
-
         // create the item on top of the parent
-        GameObject newItem = Instantiate(spawnableItem, transform.position, Quaternion.identity, itemParent.transform);
+        Item newItem = Instantiate(spawnableItem, transform.position, Quaternion.identity, itemParent.transform).GetComponent<Item>();
         newItem.GetComponent<SpriteRenderer>().sortingOrder = 2;
+        newItem.Index = Index;
 
         // move item to the board
-        ItemSpawned?.Invoke(newItem.GetComponent<Item>());
+        ItemSpawned?.Invoke(newItem);
     }
 }

@@ -7,6 +7,8 @@ public class Board : MonoBehaviour
     private const int NumRows = 8;
     private const int NumCols = 6;
 
+    static readonly Vector2Int NegativeIdx = new Vector2Int(-1, -1);
+
     // Public Fields
     public static Board Instance;
 
@@ -50,6 +52,9 @@ public class Board : MonoBehaviour
     // Event Handlers
     private void HandleMovObjReleased(MoveableObject obj, Vector3 position)
     {
+        // set old spot to null first
+        moveableObjects[TwoDimToFlatIndex(obj.Index)] = null;
+
         Vector2Int index = boardGeometry.TransformToBoardIndex(position);
         int flatIndex = TwoDimToFlatIndex(index);
 
@@ -69,12 +74,14 @@ public class Board : MonoBehaviour
 
     private void HandleItemSpawned(Item item)
     {
-        Debug.Log("item spawned on board");
+        Vector2Int index = GetEmptyIndex();
+        if (index == NegativeIdx)
+        {
+            Destroy(item.gameObject);
+            return;
+        }
 
-        // get the closest empty index
-        Vector2Int index = Vector2Int.zero;
-
-        
+        AddObjectToBoard(item, index);
     }
 
     // Private Methods
@@ -99,5 +106,22 @@ public class Board : MonoBehaviour
 
         obj.DropOnPosition(index, newPosition);
         moveableObjects[flatIndex] = obj;
+    }
+
+    // currently returns the first empty index, edit to make the closest
+    // alg for getting the closest empty index?
+    private Vector2Int GetEmptyIndex()
+    {
+        for (int i = 0;  i < moveableObjects.Length; i++)
+        {
+            if (moveableObjects[i] == null)
+            {
+                return FlatToTwoDimIndex(i);
+            }
+        }
+
+        // full board
+        Debug.Log("full board");
+        return NegativeIdx;
     }
 }
