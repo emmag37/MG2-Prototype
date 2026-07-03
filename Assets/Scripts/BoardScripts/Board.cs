@@ -45,12 +45,42 @@ public class Board : MonoBehaviour
     private void HandleMovObjReleased(MoveableObject obj, Vector3 position)
     {
         Vector2Int index = boardGeometry.TransformToBoardIndex(position);
+        int flatIndex = TwoDimToFlatIndex(index);
 
-        // check and see if that index is filled
+        // swap objects if the index is filled
+        if (moveableObjects[flatIndex] != null)
+        {
+            Debug.Log("swapped");
 
+            MoveableObject swappedObj = moveableObjects[flatIndex];
+
+            // put the current object at "this"  index
+            Vector2Int oldIndex = obj.Index;
+            Vector3 oldPosition = boardGeometry.BoardIndexToTransform(oldIndex);
+            swappedObj.DropOnPosition(oldIndex, oldPosition);
+
+            // put in new spot in array
+            int oldFlat = TwoDimToFlatIndex(oldIndex);
+            moveableObjects[oldFlat] = swappedObj;
+        } 
+
+        // put object in its new spot
         Vector3 newPosition = boardGeometry.BoardIndexToTransform(index);
-
         obj.DropOnPosition(index, newPosition);
+        moveableObjects[flatIndex] = obj;
     }
 
+    // Private Methods
+    private int TwoDimToFlatIndex(Vector2Int idx)
+    {
+        return idx.x * NumCols + idx.y;
+    }
+
+    private Vector2Int FlatToTwoDimIndex(int idx)
+    {
+        int r = idx / NumCols;
+        int c = idx % NumCols;
+
+        return new Vector2Int(r, c);
+    }
 }
