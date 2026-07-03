@@ -16,6 +16,8 @@ public class Spawner : MoveableObject
     // Event Handlers
     protected override void HandleTap()
     {
+        base.HandleTap();
+
         SpawnItem();
     }
 

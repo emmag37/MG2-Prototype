@@ -65,19 +65,25 @@ public class MoveableObject : MonoBehaviour
     }
 
     // Event Handlers
-    private void HandleStartDrag()
+    protected virtual void HandleStartDrag()
     {
+        Debug.Log("handle start drag");
+
         // set layer to top
         spriteRenderer.sortingOrder = 2;
     }
 
-    private void HandleReleased(Vector3 position)
+    protected virtual void HandleReleased(Vector3 position)
     {
+        Debug.Log("handle released");
+
         MovObjReleased?.Invoke(this, position);
     }
 
     protected virtual void HandleTap()
     {
+        Debug.Log("handle tap");
+
         // potentially selects the item
     }
 }

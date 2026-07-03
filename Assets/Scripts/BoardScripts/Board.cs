@@ -52,21 +52,28 @@ public class Board : MonoBehaviour
     // Event Handlers
     private void HandleMovObjReleased(MoveableObject obj, Vector3 position)
     {
+        Debug.Log("handle move object released");
+
         // set old spot to null first
         moveableObjects[TwoDimToFlatIndex(obj.Index)] = null;
 
         Vector2Int index = boardGeometry.TransformToBoardIndex(position);
         int flatIndex = TwoDimToFlatIndex(index);
 
-        // swap objects if the index is filled
+        /*
+        // check for merge/swap objects if the index is filled
         if (moveableObjects[flatIndex] != null && moveableObjects[flatIndex] != obj)
         {
-            MoveableObject swappedObj = moveableObjects[flatIndex];
+            MoveableObject currentObj = moveableObjects[flatIndex];
 
-            // put the current object at "this"  index
-            Vector2Int oldIndex = obj.Index;
-            AddObjectToBoard(swappedObj, oldIndex);
-        }
+            /*
+            if (MergableObjects(obj, currentObj))
+            {
+                Debug.Log("mergable");
+            }
+
+            AddObjectToBoard(currentObj, obj.Index);    // swap object places
+        }*/
 
         // put object in its new spot
         AddObjectToBoard(obj, index);
@@ -81,6 +88,7 @@ public class Board : MonoBehaviour
             return;
         }
 
+        item.MovObjReleased += HandleMovObjReleased;
         AddObjectToBoard(item, index);
     }
 
@@ -101,7 +109,9 @@ public class Board : MonoBehaviour
     // adds the object to the array and tells the object where to go
     private void AddObjectToBoard(MoveableObject obj, Vector2Int index)
     {
+        Debug.Log($"add object to board at {index}");
         int flatIndex = TwoDimToFlatIndex(index);
+
         Vector3 newPosition = boardGeometry.BoardIndexToTransform(index);
 
         obj.DropOnPosition(index, newPosition);
@@ -123,5 +133,14 @@ public class Board : MonoBehaviour
         // full board
         Debug.Log("full board");
         return NegativeIdx;
+    }
+
+    private bool MergableObjects(MoveableObject objMoved, MoveableObject objStatic)
+    {
+        bool mergable = (objMoved.Type == MoveableType.Item
+            && objStatic.Type == MoveableType.Item)
+            && ((Item)objMoved).Level == ((Item)objStatic).Level;
+
+        return mergable;
     }
 }
