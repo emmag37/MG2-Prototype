@@ -60,20 +60,19 @@ public class Board : MonoBehaviour
         Vector2Int index = boardGeometry.TransformToBoardIndex(position);
         int flatIndex = TwoDimToFlatIndex(index);
 
-        /*
+        
         // check for merge/swap objects if the index is filled
         if (moveableObjects[flatIndex] != null && moveableObjects[flatIndex] != obj)
         {
             MoveableObject currentObj = moveableObjects[flatIndex];
 
-            /*
             if (MergableObjects(obj, currentObj))
             {
                 Debug.Log("mergable");
             }
 
             AddObjectToBoard(currentObj, obj.Index);    // swap object places
-        }*/
+        }
 
         // put object in its new spot
         AddObjectToBoard(obj, index);
