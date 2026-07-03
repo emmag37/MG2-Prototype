@@ -104,6 +104,8 @@ public class Draggable : MonoBehaviour
         // start moving
         if (pointer.press.wasPressedThisFrame)
         {
+
+
             Collider2D hit = Physics2D.OverlapPoint(pointerWorldPos); // check if mouse is on the collider
             if (hit && hit.gameObject == gameObject)
             {
