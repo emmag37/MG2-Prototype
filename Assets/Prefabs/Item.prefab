@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7605462879944638138}
   - component: {fileID: 5042799133698271135}
+  - component: {fileID: 5162945198283199926}
   m_Layer: 0
   m_Name: Item
   m_TagString: Untagged
@@ -91,3 +92,15 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &5162945198283199926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1538541697059301392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0397526bfd911432aa77f219ba4f5e38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Item
