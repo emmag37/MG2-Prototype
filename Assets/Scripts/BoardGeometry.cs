@@ -54,8 +54,8 @@ public class BoardGeometry
 	/// <returns>The board index (row, col) corresponding to the board array.</returns>
     public (int, int) TransformToBoardIndex(Vector3 position)
     {
-        int r = Mathf.RoundToInt((zeroY - position.y) / cellWidth);
-        int c = Mathf.RoundToInt((position.x - zeroX) / cellWidth);
+        int r = Mathf.Clamp(Mathf.RoundToInt((zeroY - position.y) / cellWidth), 0, numRows - 1);
+        int c = Mathf.Clamp(Mathf.RoundToInt((position.x - zeroX) / cellWidth), 0, numCols - 1);
 
         return (r, c);
     }
@@ -69,8 +69,10 @@ public class BoardGeometry
     {
         Vector3 newTransform = Vector3.zero;
 
+        // this y value is not right
+
         newTransform.x = zeroX + index.Item2 * cellWidth;
-        newTransform.y = zeroY + index.Item1 * cellWidth;
+        newTransform.y = zeroY - index.Item1 * cellWidth;
 
         return newTransform;
     }
