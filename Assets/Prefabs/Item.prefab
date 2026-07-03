@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 5162945198283199926}
   - component: {fileID: 7773467686019199505}
   - component: {fileID: 1301945209446700076}
-  - component: {fileID: 2411407832328709751}
   m_Layer: 0
   m_Name: Item
   m_TagString: Untagged
@@ -107,6 +106,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0397526bfd911432aa77f219ba4f5e38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Item
+  Index: {x: 0, y: 0}
+  Type: 1
 --- !u!114 &7773467686019199505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,15 +166,3 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.32, y: 1.32}
   m_EdgeRadius: 0
---- !u!114 &2411407832328709751
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1538541697059301392}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b866d67b3adc4f37a378bddd1da563e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MoveableObject

@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 8445594332395133992}
   - component: {fileID: 9078084498801535624}
   - component: {fileID: 6840308937148571028}
-  - component: {fileID: 8699596740577482030}
   m_Layer: 0
   m_Name: Powerup
   m_TagString: Untagged
@@ -107,6 +106,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccd1498ce9863427f90b010030aad92e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Powerup
+  Index: {x: 0, y: 0}
+  Type: 2
 --- !u!114 &9078084498801535624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,15 +166,3 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.32, y: 1.32}
   m_EdgeRadius: 0
---- !u!114 &8699596740577482030
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3867744714906874662}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b866d67b3adc4f37a378bddd1da563e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MoveableObject

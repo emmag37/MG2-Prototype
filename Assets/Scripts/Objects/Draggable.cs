@@ -36,7 +36,8 @@ public class Draggable : MonoBehaviour
     private bool selected = false;
     private Vector3 dragOffset;
 
-    private Vector3 pressStartPos;      // pos where the object starts/is set
+    private Vector3 pointerStartPos;
+    private Vector3 objectStartPos;
     private bool dragged = false;
 
     private float minX, maxX, minY, maxY;
@@ -76,7 +77,7 @@ public class Draggable : MonoBehaviour
         minY = bottom;
         maxY = top;
 
-        pressStartPos = transform.position;
+        objectStartPos = transform.position;
     }
 
 
@@ -91,7 +92,7 @@ public class Draggable : MonoBehaviour
     public void Drop(Vector3 newPosition)
     {
         transform.position = newPosition;
-        pressStartPos = newPosition;
+        objectStartPos = newPosition;
     }
 
 
@@ -119,6 +120,7 @@ public class Draggable : MonoBehaviour
             {
                 selected = true;
 
+                pointerStartPos = pointerWorldPos;      // for distance check
                 dragOffset = transform.position - pointerWorldPos;
 
                 StartDrag?.Invoke();
@@ -128,7 +130,7 @@ public class Draggable : MonoBehaviour
         // continue moving
         if (selected && pointer.press.isPressed)
         {
-            float distanceMoved = Vector3.Distance(pressStartPos, pointerWorldPos);
+            float distanceMoved = Vector3.Distance(pointerStartPos, pointerWorldPos);
             if (distanceMoved > TapThreshold)
             {
                 dragged = true;
@@ -153,7 +155,7 @@ public class Draggable : MonoBehaviour
             }
             else
             {
-                transform.position = pressStartPos;
+                transform.position = objectStartPos;    // make sure object stays exactly where it was
                 Tapped?.Invoke();               // new event for tap
             }
 

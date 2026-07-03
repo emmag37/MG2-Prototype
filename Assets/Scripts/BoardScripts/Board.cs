@@ -48,7 +48,7 @@ public class Board : MonoBehaviour
         int flatIndex = TwoDimToFlatIndex(index);
 
         // swap objects if the index is filled
-        if (moveableObjects[flatIndex] != null)
+        if (moveableObjects[flatIndex] != null && moveableObjects[flatIndex] != obj)
         {
             Debug.Log("swapped");
 

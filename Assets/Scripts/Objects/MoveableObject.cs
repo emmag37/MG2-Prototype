@@ -1,26 +1,33 @@
 using UnityEngine;
 using System;
 
+public enum MoveableType
+{
+    Spawner,
+    Item,
+    PowerUp
+}
+
 // requires components:
-    // draggable script
-    // grid grandparent
-    // 2d collider
-    // sprite renderer?
+// draggable script
+// grid grandparent
+// 2d collider
+// sprite renderer?
 public class MoveableObject : MonoBehaviour
 {
     // Public Fields
     public Vector2Int Index;
+    public MoveableType Type;
 
     // Events
     public event Action<MoveableObject, Vector3> MovObjReleased;
-    public event Action MovObjTapped;
 
     // Private Fields
     private Draggable movement;
     private SpriteRenderer spriteRenderer;
 
     // Unity Lifecyle
-    void Awake()
+    protected virtual void Awake()
     {
         movement = GetComponent<Draggable>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -50,8 +57,6 @@ public class MoveableObject : MonoBehaviour
     // Public Methods
     public void DropOnPosition(Vector2Int index, Vector3 position)
     {
-        Debug.Log($"index: {index}, position: {position}");
-
         Index = index;
         movement.Drop(position);
 
@@ -68,14 +73,12 @@ public class MoveableObject : MonoBehaviour
 
     private void HandleReleased(Vector3 position)
     {
-        Debug.Log("obj released");
+        Debug.Log("released");
         MovObjReleased?.Invoke(this, position);
     }
 
-    private void HandleTap()
+    protected virtual void HandleTap()
     {
         Debug.Log("tapped");
-
-        MovObjTapped?.Invoke();
     }
 }
