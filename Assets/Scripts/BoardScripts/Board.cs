@@ -25,8 +25,11 @@ public class Board : MonoBehaviour
         // Subscribe to all the currently set moveable objects
         foreach (MoveableObject obj in moveableObjects)
         {
-            if (obj != null)
-                obj.MovObjReleased += HandleMovObjReleased;
+            if (obj == null) continue;
+
+            obj.MovObjReleased += HandleMovObjReleased;
+            if (obj.Type == MoveableType.Spawner)
+                ((Spawner)obj).ItemSpawned += HandleItemSpawned;
         }
     }
 
@@ -35,8 +38,11 @@ public class Board : MonoBehaviour
         // Unsubscribe to all the currently set moveable objects
         foreach (MoveableObject obj in moveableObjects)
         {
-            if (obj != null)
-                obj.MovObjReleased -= HandleMovObjReleased;
+            if (obj == null) continue;
+
+            obj.MovObjReleased -= HandleMovObjReleased;
+            if (obj.Type == MoveableType.Spawner)
+                ((Spawner)obj).ItemSpawned -= HandleItemSpawned;
         }
     }
 
@@ -50,24 +56,25 @@ public class Board : MonoBehaviour
         // swap objects if the index is filled
         if (moveableObjects[flatIndex] != null && moveableObjects[flatIndex] != obj)
         {
-            Debug.Log("swapped");
-
             MoveableObject swappedObj = moveableObjects[flatIndex];
 
             // put the current object at "this"  index
             Vector2Int oldIndex = obj.Index;
-            Vector3 oldPosition = boardGeometry.BoardIndexToTransform(oldIndex);
-            swappedObj.DropOnPosition(oldIndex, oldPosition);
-
-            // put in new spot in array
-            int oldFlat = TwoDimToFlatIndex(oldIndex);
-            moveableObjects[oldFlat] = swappedObj;
-        } 
+            AddObjectToBoard(swappedObj, oldIndex);
+        }
 
         // put object in its new spot
-        Vector3 newPosition = boardGeometry.BoardIndexToTransform(index);
-        obj.DropOnPosition(index, newPosition);
-        moveableObjects[flatIndex] = obj;
+        AddObjectToBoard(obj, index);
+    }
+
+    private void HandleItemSpawned(Item item)
+    {
+        Debug.Log("item spawned on board");
+
+        // get the closest empty index
+        Vector2Int index = Vector2Int.zero;
+
+        
     }
 
     // Private Methods
@@ -82,5 +89,15 @@ public class Board : MonoBehaviour
         int c = idx % NumCols;
 
         return new Vector2Int(r, c);
+    }
+
+    // adds the object to the array and tells the object where to go
+    private void AddObjectToBoard(MoveableObject obj, Vector2Int index)
+    {
+        int flatIndex = TwoDimToFlatIndex(index);
+        Vector3 newPosition = boardGeometry.BoardIndexToTransform(index);
+
+        obj.DropOnPosition(index, newPosition);
+        moveableObjects[flatIndex] = obj;
     }
 }

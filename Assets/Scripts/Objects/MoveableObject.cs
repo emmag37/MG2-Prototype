@@ -73,12 +73,11 @@ public class MoveableObject : MonoBehaviour
 
     private void HandleReleased(Vector3 position)
     {
-        Debug.Log("released");
         MovObjReleased?.Invoke(this, position);
     }
 
     protected virtual void HandleTap()
     {
-        Debug.Log("tapped");
+        // potentially selects the item
     }
 }
