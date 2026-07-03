@@ -939,6 +939,38 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6326842519378011617, guid: 00c183e76cda842ec81a48fb5c08ccde, type: 3}
   m_PrefabInstance: {fileID: 170689688}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &171381295
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 171381296}
+  m_Layer: 0
+  m_Name: Powerups
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &171381296
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 171381295}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1513184843900822675}
+  m_Father: {fileID: 498845889}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &201188208
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1759,8 +1791,9 @@ GameObject:
   m_Component:
   - component: {fileID: 498845889}
   - component: {fileID: 498845888}
+  - component: {fileID: 498845890}
   m_Layer: 0
-  m_Name: Grid
+  m_Name: Board
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1841,9 +1874,21 @@ Transform:
   - {fileID: 130394112}
   - {fileID: 1162946113}
   - {fileID: 1367250923}
-  - {fileID: 1513184843900822675}
+  - {fileID: 171381296}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &498845890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 498845887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e983a2040012846de90c45c773db4f95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Grid
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -4714,7 +4759,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 498845889}
+    m_TransformParent: {fileID: 171381296}
     m_Modifications:
     - target: {fileID: 2176275612085815875, guid: d87e7be25325e4944979ba7f36745fc9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4840,6 +4885,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 130394112}
     m_Modifications:
+    - target: {fileID: -135711710430744208, guid: ff6bfbc6459d941119be2257d3d6b68c, type: 3}
+      propertyPath: board
+      value: 
+      objectReference: {fileID: 498845890}
     - target: {fileID: 1102386098540608749, guid: ff6bfbc6459d941119be2257d3d6b68c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.125
