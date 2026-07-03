@@ -13,6 +13,7 @@ public class MoveableObject : MonoBehaviour
 
     // Events
     public event Action<MoveableObject, Vector3> MovObjReleased;
+    public event Action MovObjTapped;
 
     // Private Fields
     private Draggable movement;
@@ -36,12 +37,14 @@ public class MoveableObject : MonoBehaviour
 
         movement.StartDrag += HandleStartDrag;
         movement.Released += HandleReleased;
+        movement.Tapped += HandleTap;
     }
 
     void OnDestroy()
     {
         movement.StartDrag -= HandleStartDrag;
         movement.Released -= HandleReleased;
+        movement.Tapped -= HandleTap;
     }
 
     // Public Methods
@@ -67,5 +70,12 @@ public class MoveableObject : MonoBehaviour
     {
         Debug.Log("obj released");
         MovObjReleased?.Invoke(this, position);
+    }
+
+    private void HandleTap()
+    {
+        Debug.Log("tapped");
+
+        MovObjTapped?.Invoke();
     }
 }

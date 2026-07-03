@@ -12,6 +12,8 @@ using System;
 /// </remarks>
 public class Draggable : MonoBehaviour
 {
+    private const float TapThreshold = 0.1f; // world units the pointer can move and still count as a tap
+
     // ================================
     // Events
     // ================================
@@ -23,14 +25,19 @@ public class Draggable : MonoBehaviour
 	/// </summary>
     public event Action<Vector3> Released;
 
+    public event Action Tapped;
+
     // ================================
     // Private Fields
     // ================================
 
     private Camera cam;
 
-    private bool isDragging = false;
+    private bool selected = false;
     private Vector3 dragOffset;
+
+    private Vector3 pressStartPos;      // pos where the object starts/is set
+    private bool dragged = false;
 
     private float minX, maxX, minY, maxY;
 
@@ -68,6 +75,8 @@ public class Draggable : MonoBehaviour
         maxX = right;
         minY = bottom;
         maxY = top;
+
+        pressStartPos = transform.position;
     }
 
 
@@ -82,6 +91,7 @@ public class Draggable : MonoBehaviour
     public void Drop(Vector3 newPosition)
     {
         transform.position = newPosition;
+        pressStartPos = newPosition;
     }
 
 
@@ -104,12 +114,10 @@ public class Draggable : MonoBehaviour
         // start moving
         if (pointer.press.wasPressedThisFrame)
         {
-
-
             Collider2D hit = Physics2D.OverlapPoint(pointerWorldPos); // check if mouse is on the collider
             if (hit && hit.gameObject == gameObject)
             {
-                isDragging = true;
+                selected = true;
 
                 dragOffset = transform.position - pointerWorldPos;
 
@@ -118,8 +126,14 @@ public class Draggable : MonoBehaviour
         }
 
         // continue moving
-        if (isDragging && pointer.press.isPressed)
+        if (selected && pointer.press.isPressed)
         {
+            float distanceMoved = Vector3.Distance(pressStartPos, pointerWorldPos);
+            if (distanceMoved > TapThreshold)
+            {
+                dragged = true;
+            }
+
             Vector3 newPos = pointerWorldPos + dragOffset;    // calculate new position
 
             newPos.x = Mathf.Clamp(newPos.x, minX, maxX);   // clamp position to boundaries
@@ -128,11 +142,22 @@ public class Draggable : MonoBehaviour
             transform.position = newPos;
         }
 
-        // release
-        if (isDragging && pointer.press.wasReleasedThisFrame)
+        // release - checks for tap vs drag
+        if (selected && pointer.press.wasReleasedThisFrame)
         {
-            isDragging = false;
-            Released?.Invoke(transform.position);      // throw event to the player script
+            selected = false;
+
+            if (dragged)
+            {
+                Released?.Invoke(transform.position); // existing drag-release event
+            }
+            else
+            {
+                transform.position = pressStartPos;
+                Tapped?.Invoke();               // new event for tap
+            }
+
+            dragged = false;
         }
     }
 }
