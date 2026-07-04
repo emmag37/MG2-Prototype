@@ -5,6 +5,9 @@ using System;
 // spawns items when clicked
 public class Spawner : MoveableObject
 {
+    // Public Fields
+    public VariantType Variant;
+
     // Events
     public event Action<Item> ItemSpawned;
 
@@ -29,6 +32,7 @@ public class Spawner : MoveableObject
         Item newItem = Instantiate(spawnableItem, transform.position, Quaternion.identity, itemParent.transform).GetComponent<Item>();
         newItem.GetComponent<SpriteRenderer>().sortingOrder = 2;
         newItem.Index = Index;
+        newItem.Variant = Variant;
 
         // move item to the board
         ItemSpawned?.Invoke(newItem);

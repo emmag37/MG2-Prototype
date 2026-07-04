@@ -138,10 +138,12 @@ public class Board : MonoBehaviour
         return NegativeIdx;
     }
 
+    // implement comparator for real project
     private bool MergableObjects(MoveableObject objMoved, MoveableObject objStatic)
     {
         bool mergable = (objMoved.Type == MoveableType.Item
             && objStatic.Type == MoveableType.Item)
+            && ((Item)objMoved).Variant == ((Item)objStatic).Variant
             && ((Item)objMoved).Level == ((Item)objStatic).Level;
 
         return mergable;

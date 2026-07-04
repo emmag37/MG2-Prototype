@@ -6,6 +6,7 @@ public class Item : MoveableObject
 {
     // Public Fields
     public int Level;
+    public VariantType Variant;
 
     // Private Fields
     private TextMeshPro numberText;

@@ -8,6 +8,12 @@ public enum MoveableType
     PowerUp
 }
 
+public enum VariantType
+{
+    Energy,
+    NoEnergy
+}
+
 // requires components:
 // draggable script
 // grid grandparent
