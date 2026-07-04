@@ -32,6 +32,8 @@ public class Board : MonoBehaviour
             obj.MovObjReleased += HandleMovObjReleased;
             if (obj.Type == MoveableType.Spawner)
                 ((Spawner)obj).ItemSpawned += HandleItemSpawned;
+            if (obj.Type == MoveableType.PowerUp)
+                ((Powerup)obj).ItemSpawned += HandleItemSpawned;
         }
     }
 

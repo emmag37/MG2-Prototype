@@ -4160,6 +4160,10 @@ PrefabInstance:
       value: Powerup
       objectReference: {fileID: 0}
     - target: {fileID: 8445594332395133992, guid: d87e7be25325e4944979ba7f36745fc9, type: 3}
+      propertyPath: level
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8445594332395133992, guid: d87e7be25325e4944979ba7f36745fc9, type: 3}
       propertyPath: Index.x
       value: 5
       objectReference: {fileID: 0}
@@ -4167,6 +4171,14 @@ PrefabInstance:
       propertyPath: Index.y
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 8445594332395133992, guid: d87e7be25325e4944979ba7f36745fc9, type: 3}
+      propertyPath: itemParent
+      value: 
+      objectReference: {fileID: 1162946112}
+    - target: {fileID: 8445594332395133992, guid: d87e7be25325e4944979ba7f36745fc9, type: 3}
+      propertyPath: spawnableItem
+      value: 
+      objectReference: {fileID: 1538541697059301392, guid: c907f9e626adc4f598cf297e61f94056, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

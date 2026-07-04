@@ -27,6 +27,12 @@ public class Item : MoveableObject
         numberText.text = $"{Level}";
     }
 
+    public void SetLevel(int level)
+    {
+        Level = level;
+        numberText.text = $"{Level}";
+    }
+
     // Private Methods
     // you need to add an override to adjust the text's sorting order when the item is moved
     protected override void HandleStartDrag()
