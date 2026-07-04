@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+// need to define board "dead" zones
 public class Board : MonoBehaviour
 {
     // Constants
@@ -35,6 +36,8 @@ public class Board : MonoBehaviour
             if (obj.Type == MoveableType.PowerUp)
                 ((Powerup)obj).ItemSpawned += HandleItemSpawned;
         }
+
+        AddDeadZone();
     }
 
     void OnDestroy()
@@ -62,13 +65,16 @@ public class Board : MonoBehaviour
         Vector2Int index = boardGeometry.TransformToBoardIndex(position);
         int flatIndex = TwoDimToFlatIndex(index);
 
-        
         // check for merge/swap objects if the index is filled
         if (moveableObjects[flatIndex] != null && moveableObjects[flatIndex] != obj)
         {
             MoveableObject currentObj = moveableObjects[flatIndex];
 
-            if (MergableObjects(obj, currentObj))
+            if (currentObj.Type == MoveableType.DeadZone)
+            {
+                index = obj.Index;
+            }
+            else if (MergableObjects(obj, currentObj))
             {
                 // "Merge" the moved one
                 ((Item)obj).Merge();
@@ -77,7 +83,9 @@ public class Board : MonoBehaviour
                 Destroy(currentObj.gameObject);
             }
             else
+            {
                 AddObjectToBoard(currentObj, obj.Index);    // swap object places
+            }
         }
 
         // put object in its new spot
@@ -129,7 +137,7 @@ public class Board : MonoBehaviour
     {
         for (int i = 0;  i < moveableObjects.Length; i++)
         {
-            if (moveableObjects[i] == null)
+            if (moveableObjects[i] == null && moveableObjects[i].Type != MoveableType.DeadZone) 
             {
                 return FlatToTwoDimIndex(i);
             }
@@ -149,5 +157,19 @@ public class Board : MonoBehaviour
             && ((Item)objMoved).Level == ((Item)objStatic).Level;
 
         return mergable;
+    }
+
+    // adds the dead zone where objects cannot be placed/swapped
+    private void AddDeadZone()
+    {
+        int[] deadZone = { 4, 5, 11, 36, 42, 43 };
+
+        foreach (int idx in deadZone)
+        {
+            MoveableObject deadObj = new MoveableObject();
+            deadObj.Type = MoveableType.DeadZone;
+
+            moveableObjects[idx] = deadObj;
+        }
     }
 }

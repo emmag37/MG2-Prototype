@@ -5,7 +5,8 @@ public enum MoveableType
 {
     Spawner,
     Item,
-    PowerUp
+    PowerUp,
+    DeadZone
 }
 
 public enum VariantType
@@ -24,6 +25,8 @@ public class MoveableObject : MonoBehaviour
     // Public Fields
     public Vector2Int Index;
     public MoveableType Type;
+
+    public bool Movable = true;   // only works if set in compile time
 
     // Events
     public event Action<MoveableObject, Vector3> MovObjReleased;
@@ -51,6 +54,8 @@ public class MoveableObject : MonoBehaviour
         movement.StartDrag += HandleStartDrag;
         movement.Released += HandleReleased;
         movement.Tapped += HandleTap;
+
+        movement.enabled = Movable;
     }
 
     void OnDestroy()
