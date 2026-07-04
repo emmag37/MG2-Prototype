@@ -68,10 +68,14 @@ public class Board : MonoBehaviour
 
             if (MergableObjects(obj, currentObj))
             {
-                Debug.Log("mergable");
-            }
+                // "Merge" the moved one
+                ((Item)obj).Merge();
 
-            AddObjectToBoard(currentObj, obj.Index);    // swap object places
+                // delete the static one
+                Destroy(currentObj.gameObject);
+            }
+            else
+                AddObjectToBoard(currentObj, obj.Index);    // swap object places
         }
 
         // put object in its new spot
