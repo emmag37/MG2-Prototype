@@ -5,8 +5,7 @@ public enum MoveableType
 {
     Spawner,
     Item,
-    PowerUp,
-    DeadZone
+    PowerUp
 }
 
 public enum VariantType
@@ -78,23 +77,17 @@ public class MoveableObject : MonoBehaviour
     // Event Handlers
     protected virtual void HandleStartDrag()
     {
-        Debug.Log("handle start drag");
-
         // set layer to top
         spriteRenderer.sortingOrder = 2;
     }
 
     protected virtual void HandleReleased(Vector3 position)
     {
-        Debug.Log("handle released");
-
         MovObjReleased?.Invoke(this, position);
     }
 
     protected virtual void HandleTap()
     {
-        Debug.Log("handle tap");
-
         // potentially selects the item
     }
 }

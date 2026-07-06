@@ -8,6 +8,7 @@ public class Board : MonoBehaviour
     private const int NumRows = 8;
     private const int NumCols = 6;
 
+    static readonly int[] DeadZone = { 4, 5, 11, 36, 42, 43 };
     static readonly Vector2Int NegativeIdx = new Vector2Int(-1, -1);
 
     // Public Fields
@@ -36,8 +37,6 @@ public class Board : MonoBehaviour
             if (obj.Type == MoveableType.PowerUp)
                 ((Powerup)obj).ItemSpawned += HandleItemSpawned;
         }
-
-        AddDeadZone();
     }
 
     void OnDestroy()
@@ -57,8 +56,6 @@ public class Board : MonoBehaviour
     // Event Handlers
     private void HandleMovObjReleased(MoveableObject obj, Vector3 position)
     {
-        Debug.Log("handle move object released");
-
         // set old spot to null first
         moveableObjects[TwoDimToFlatIndex(obj.Index)] = null;
 
@@ -66,15 +63,16 @@ public class Board : MonoBehaviour
         int flatIndex = TwoDimToFlatIndex(index);
 
         // check for merge/swap objects if the index is filled
-        if (moveableObjects[flatIndex] != null && moveableObjects[flatIndex] != obj)
+        if (IndexInDeadZone(flatIndex))
+        {
+            Debug.Log("identified dead zone");
+            index = obj.Index;
+        }
+        else if (moveableObjects[flatIndex] != null && moveableObjects[flatIndex] != obj)
         {
             MoveableObject currentObj = moveableObjects[flatIndex];
-
-            if (currentObj.Type == MoveableType.DeadZone)
-            {
-                index = obj.Index;
-            }
-            else if (MergableObjects(obj, currentObj))
+            
+            if (MergableObjects(obj, currentObj))
             {
                 // "Merge" the moved one
                 ((Item)obj).Merge();
@@ -122,7 +120,6 @@ public class Board : MonoBehaviour
     // adds the object to the array and tells the object where to go
     private void AddObjectToBoard(MoveableObject obj, Vector2Int index)
     {
-        Debug.Log($"add object to board at {index}");
         int flatIndex = TwoDimToFlatIndex(index);
 
         Vector3 newPosition = boardGeometry.BoardIndexToTransform(index);
@@ -137,7 +134,7 @@ public class Board : MonoBehaviour
     {
         for (int i = 0;  i < moveableObjects.Length; i++)
         {
-            if (moveableObjects[i] == null && moveableObjects[i].Type != MoveableType.DeadZone) 
+            if (moveableObjects[i] == null && !IndexInDeadZone(i)) // bad check, O(n^2), doesn't matter for this
             {
                 return FlatToTwoDimIndex(i);
             }
@@ -159,17 +156,14 @@ public class Board : MonoBehaviour
         return mergable;
     }
 
-    // adds the dead zone where objects cannot be placed/swapped
-    private void AddDeadZone()
+    // takes only the flat index
+    private bool IndexInDeadZone(int index)
     {
-        int[] deadZone = { 4, 5, 11, 36, 42, 43 };
-
-        foreach (int idx in deadZone)
+        foreach (int deadIdx in DeadZone)
         {
-            MoveableObject deadObj = new MoveableObject();
-            deadObj.Type = MoveableType.DeadZone;
-
-            moveableObjects[idx] = deadObj;
+            if (index == deadIdx) return true;
         }
+
+        return false;
     }
 }
