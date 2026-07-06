@@ -42,6 +42,8 @@ public class Draggable : MonoBehaviour
 
     private float minX, maxX, minY, maxY;
 
+    private bool moveable;
+
 
     // ================================
     // Unity Lifecycle Methods
@@ -70,7 +72,7 @@ public class Draggable : MonoBehaviour
 	/// <param name="right">Right boundary.</param>
 	/// <param name="top">Top boundary.</param>
 	/// <param name="bottom">Bottom boundary.</param>
-    public void Initialize(float left, float right, float top, float bottom)
+    public void Initialize(float left, float right, float top, float bottom, bool move = true)
     {
         minX = left;
         maxX = right;
@@ -78,6 +80,7 @@ public class Draggable : MonoBehaviour
         maxY = top;
 
         objectStartPos = transform.position;
+        moveable = move;
     }
 
 
@@ -128,13 +131,15 @@ public class Draggable : MonoBehaviour
         }
 
         // continue moving
-        if (selected && pointer.press.isPressed)
+        if (selected && pointer.press.isPressed)    // only runs if this object is moveable
         {
             float distanceMoved = Vector3.Distance(pointerStartPos, pointerWorldPos);
             if (distanceMoved > TapThreshold)
             {
                 dragged = true;
             }
+
+            if (!moveable) return; // do not actually drag the object, but need to check drag v tap
 
             Vector3 newPos = pointerWorldPos + dragOffset;    // calculate new position
 
@@ -149,11 +154,12 @@ public class Draggable : MonoBehaviour
         {
             selected = false;
 
-            if (dragged)
+            if (dragged && moveable)
             {
+
                 Released?.Invoke(transform.position); // existing drag-release event
             }
-            else
+            else if (!dragged)
             {
                 transform.position = objectStartPos;    // make sure object stays exactly where it was
                 Tapped?.Invoke();               // new event for tap

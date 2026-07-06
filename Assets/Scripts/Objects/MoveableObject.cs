@@ -25,7 +25,7 @@ public class MoveableObject : MonoBehaviour
     public Vector2Int Index;
     public MoveableType Type;
 
-    public bool Movable = true;   // only works if set in compile time
+    public bool Moveable = true;   // only works if set in compile time
 
     // Events
     public event Action<MoveableObject, Vector3> MovObjReleased;
@@ -47,14 +47,13 @@ public class MoveableObject : MonoBehaviour
             gridBounds.min.x + spriteRadius,
             gridBounds.max.x - spriteRadius,
             gridBounds.max.y - spriteRadius,
-            gridBounds.min.y + spriteRadius
+            gridBounds.min.y + spriteRadius,
+            Moveable
         );
 
         movement.StartDrag += HandleStartDrag;
         movement.Released += HandleReleased;
         movement.Tapped += HandleTap;
-
-        movement.enabled = Movable;
     }
 
     void OnDestroy()

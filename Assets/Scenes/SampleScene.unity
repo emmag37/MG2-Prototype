@@ -608,6 +608,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -135711710430744208, guid: ff6bfbc6459d941119be2257d3d6b68c, type: 3}
+      propertyPath: Moveable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -135711710430744208, guid: ff6bfbc6459d941119be2257d3d6b68c, type: 3}
       propertyPath: Draggable
       value: 0
       objectReference: {fileID: 0}

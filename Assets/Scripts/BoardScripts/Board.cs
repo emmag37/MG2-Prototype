@@ -11,8 +11,6 @@ public class Board : MonoBehaviour
     static readonly int[] DeadZone = { 4, 5, 11, 36, 42, 43 };
     static readonly Vector2Int NegativeIdx = new Vector2Int(-1, -1);
 
-    // Public Fields
-    public static Board Instance;
 
     // Inspector Fields
     [SerializeField] private MoveableObject[] moveableObjects = new MoveableObject[NumRows * NumCols]; // holds references to all objects currently on the board
@@ -23,7 +21,6 @@ public class Board : MonoBehaviour
     // Unity Lifecycle
     void Awake()
     {
-        Instance = this;
         boardGeometry = new BoardGeometry(NumRows, NumCols, GetComponent<SpriteRenderer>().bounds, transform.position);
 
         // Subscribe to all the currently set moveable objects
