@@ -38,21 +38,23 @@ public class Item : MoveableObject
     protected override void HandleStartDrag()
     {
         base.HandleStartDrag();
-
-        numberText.sortingOrder = 3;
     }
 
     protected override void HandleReleased(Vector3 position)
     {
         base.HandleReleased(position);
-
-        numberText.sortingOrder = 2;
     }
 
     protected override void HandleTap()
     {
         base.HandleTap();
+    }
 
-        numberText.sortingOrder = 2;
+    // Private helper override
+    protected override void SetSortingOrder(int order)
+    {
+        base.SetSortingOrder(order);
+
+        numberText.sortingOrder = order;
     }
 }

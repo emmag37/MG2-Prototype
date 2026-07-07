@@ -21,6 +21,10 @@ public enum VariantType
 // sprite renderer?
 public class MoveableObject : MonoBehaviour
 {
+    // Constants
+    private const int BaseOrder = 1;
+    private const int MovingOrder = 2;
+
     // Public Fields
     public Vector2Int Index;
     public MoveableType Type;
@@ -69,15 +73,13 @@ public class MoveableObject : MonoBehaviour
         Index = index;
         movement.Drop(position);
 
-        // set layer back to one
-        spriteRenderer.sortingOrder = 1;
+        SetSortingOrder(BaseOrder);
     }
 
     // Event Handlers
     protected virtual void HandleStartDrag()
     {
-        // set layer to top
-        spriteRenderer.sortingOrder = 2;
+        SetSortingOrder(MovingOrder);
     }
 
     protected virtual void HandleReleased(Vector3 position)
@@ -88,5 +90,13 @@ public class MoveableObject : MonoBehaviour
     protected virtual void HandleTap()
     {
         // potentially selects the item
+
+        SetSortingOrder(BaseOrder);
+    }
+
+    // Private Helper Methods
+    protected virtual void SetSortingOrder(int order)
+    {
+        spriteRenderer.sortingOrder = order;
     }
 }

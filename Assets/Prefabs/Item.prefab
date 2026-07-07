@@ -109,7 +109,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Item
   Index: {x: 0, y: 0}
   Type: 1
+  Moveable: 1
   Level: 0
+  Variant: 0
 --- !u!114 &7773467686019199505
 MonoBehaviour:
   m_ObjectHideFlags: 0
