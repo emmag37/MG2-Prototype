@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using TMPro;
 
 // need to define board "dead" zones
 public class Board : MonoBehaviour
@@ -7,16 +8,20 @@ public class Board : MonoBehaviour
     // Constants
     private const int NumRows = 8;
     private const int NumCols = 6;
+    private const int StartEnergy = 100;
 
     static readonly int[] DeadZone = { 4, 5, 11, 36, 42, 43 };
     static readonly Vector2Int NegativeIdx = new Vector2Int(-1, -1);
 
 
     // Inspector Fields
+    [SerializeField] private TextMeshProUGUI energyText;
+
     [SerializeField] private MoveableObject[] moveableObjects = new MoveableObject[NumRows * NumCols]; // holds references to all objects currently on the board
 
     // Private Fields
     private BoardGeometry boardGeometry;
+    private int numEnergy;
 
     // Unity Lifecycle
     void Awake()
@@ -34,6 +39,9 @@ public class Board : MonoBehaviour
             if (obj.Type == MoveableType.PowerUp)
                 ((Powerup)obj).ItemSpawned += HandleItemSpawned;
         }
+
+        // update ui
+        UpdateNumEnergy(StartEnergy);
     }
 
     void OnDestroy()
@@ -90,7 +98,8 @@ public class Board : MonoBehaviour
     private void HandleItemSpawned(Item item)
     {
         Vector2Int index = GetEmptyIndex();
-        if (index == NegativeIdx)
+
+        if (index == NegativeIdx || (item.Variant == VariantType.Energy && numEnergy == 0))
         {
             Destroy(item.gameObject);
             return;
@@ -98,6 +107,9 @@ public class Board : MonoBehaviour
 
         item.MovObjReleased += HandleMovObjReleased;
         AddObjectToBoard(item, index);
+
+        if (item.Variant == VariantType.Energy)
+            UpdateNumEnergy(numEnergy - 1);
     }
 
     // Private Methods
@@ -162,5 +174,12 @@ public class Board : MonoBehaviour
         }
 
         return false;
+    }
+
+    // updates the num energy and energy text display
+    private void UpdateNumEnergy(int num)
+    {
+        numEnergy = num;
+        energyText.text = $"{num}";
     }
 }

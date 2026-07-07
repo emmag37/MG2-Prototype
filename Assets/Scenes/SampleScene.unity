@@ -1890,6 +1890,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e983a2040012846de90c45c773db4f95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Grid
+  energyText: {fileID: 115327590}
   moveableObjects:
   - {fileID: 8846045757561448238}
   - {fileID: 268680458}
