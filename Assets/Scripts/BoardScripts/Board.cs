@@ -228,8 +228,7 @@ public class Board : MonoBehaviour
             ((Powerup)obj).ItemSpawned += HandlePowerupItemSpawned;
         }
 
-        // consider adding on destroy handler to unsubscribe,
-        // don't think this is necessary for now
+        // consider adding on destroy handler to unsubscribe
     }
 
 }
