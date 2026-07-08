@@ -9,6 +9,7 @@ public class Board : MonoBehaviour
     private const int NumRows = 8;
     private const int NumCols = 6;
     private const int StartEnergy = 100;
+    private const int PowerupSpawnThreshold = 10;
 
     static readonly int[] DeadZone = { 4, 5, 11, 36, 42, 43 };
     static readonly Vector2Int NegativeIdx = new Vector2Int(-1, -1);
@@ -18,6 +19,8 @@ public class Board : MonoBehaviour
     [SerializeField] private TextMeshProUGUI energyText;
 
     [SerializeField] private MoveableObject[] moveableObjects = new MoveableObject[NumRows * NumCols]; // holds references to all objects currently on the board
+    [SerializeField] private GameObject powerupPrefab;
+    [SerializeField] private GameObject powerupParent;
 
     // Private Fields
     private BoardGeometry boardGeometry;
@@ -85,6 +88,13 @@ public class Board : MonoBehaviour
 
                 itemsMergedCounter++;
                 Debug.Log($"items merged: {itemsMergedCounter}");
+
+                if (itemsMergedCounter == PowerupSpawnThreshold)
+                {
+                    Debug.Log("spawn powerup now");
+                    SpawnPowerup((Item)obj);
+                    itemsMergedCounter = 0;
+                }
             }
             else
             {
@@ -106,7 +116,7 @@ public class Board : MonoBehaviour
             return;
         }
 
-        item.MovObjReleased += HandleMovObjReleased;
+        SubscribeObject(item);
         AddObjectToBoard(item, index);
 
         if (item.Variant == VariantType.Energy)
@@ -183,4 +193,26 @@ public class Board : MonoBehaviour
         numEnergy = num;
         energyText.text = $"{num}";
     }
+
+    // item is the item that was merged that initiated the spawn
+    // must be called before the item is actually moved
+    private void SpawnPowerup(Item item)
+    {
+        // create the powerup
+        Debug.Log($"Powerup index: {item.Index}");
+
+        Powerup newPowerup = Instantiate(powerupPrefab, powerupParent.transform).GetComponent<Powerup>();
+        newPowerup.Initialize(item, powerupParent);
+
+        SubscribeObject(newPowerup);
+        AddObjectToBoard(newPowerup, item.Index);
+    }
+
+    private void SubscribeObject(MoveableObject obj)
+    {
+        obj.MovObjReleased += HandleMovObjReleased;
+
+        // consider adding on destroy handler to unsubscribe,
+        // don't think this is necessary for now
+    } 
 }

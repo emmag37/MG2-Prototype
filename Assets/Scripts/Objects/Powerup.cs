@@ -18,6 +18,14 @@ public class Powerup : MoveableObject
     private float doubleTapWindow = 0.3f;
     private float lastTapTime = -1f;    // sets so no initial double tap on single tap
 
+    // initializer
+    public void Initialize(Item item, GameObject parent)
+    {
+        spawnableItem = item.gameObject;
+        itemParent = parent;
+        variant = item.Variant;
+    }
+
     // checks for the double tap
     protected override void HandleTap()
     {

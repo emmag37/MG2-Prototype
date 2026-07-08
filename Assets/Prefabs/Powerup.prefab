@@ -112,7 +112,7 @@ MonoBehaviour:
   spawnableItem: {fileID: 0}
   itemParent: {fileID: 0}
   variant: 0
-  level: 0
+  level: 3
 --- !u!114 &9078084498801535624
 MonoBehaviour:
   m_ObjectHideFlags: 0
