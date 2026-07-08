@@ -108,6 +108,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Powerup
   Index: {x: 0, y: 0}
   Type: 2
+  Moveable: 1
+  spawnableItem: {fileID: 0}
+  itemParent: {fileID: 0}
+  variant: 0
+  level: 0
 --- !u!114 &9078084498801535624
 MonoBehaviour:
   m_ObjectHideFlags: 0

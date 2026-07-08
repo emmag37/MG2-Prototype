@@ -22,6 +22,7 @@ public class Board : MonoBehaviour
     // Private Fields
     private BoardGeometry boardGeometry;
     private int numEnergy;
+    private int itemsMergedCounter = 0;
 
     // Unity Lifecycle
     void Awake()
@@ -79,11 +80,11 @@ public class Board : MonoBehaviour
             
             if (MergableObjects(obj, currentObj))
             {
-                // "Merge" the moved one
-                ((Item)obj).Merge();
+                ((Item)obj).Merge();    // "Merge" the moved one
+                Destroy(currentObj.gameObject); // delete the static one
 
-                // delete the static one
-                Destroy(currentObj.gameObject);
+                itemsMergedCounter++;
+                Debug.Log($"items merged: {itemsMergedCounter}");
             }
             else
             {
