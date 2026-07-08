@@ -21,6 +21,7 @@ public class Board : MonoBehaviour
     [SerializeField] private MoveableObject[] moveableObjects = new MoveableObject[NumRows * NumCols]; // holds references to all objects currently on the board
     [SerializeField] private GameObject powerupPrefab;
     [SerializeField] private GameObject powerupParent;
+    [SerializeField] private GameObject itemParent;
 
     // Private Fields
     private BoardGeometry boardGeometry;
@@ -87,11 +88,9 @@ public class Board : MonoBehaviour
                 Destroy(currentObj.gameObject); // delete the static one
 
                 itemsMergedCounter++;
-                Debug.Log($"items merged: {itemsMergedCounter}");
 
                 if (itemsMergedCounter == PowerupSpawnThreshold)
                 {
-                    Debug.Log("spawn powerup now");
                     SpawnPowerup((Item)obj);
                     itemsMergedCounter = 0;
                 }
@@ -121,6 +120,21 @@ public class Board : MonoBehaviour
 
         if (item.Variant == VariantType.Energy)
             UpdateNumEnergy(numEnergy - 1);
+    }
+
+    // should never cost energy to use a powerup
+    private void HandlePowerupItemSpawned(Item item)
+    {
+        Vector2Int index = GetEmptyIndex();
+
+        if (index == NegativeIdx)
+        {
+            Destroy(item.gameObject);
+            return;
+        }
+
+        SubscribeObject(item);
+        AddObjectToBoard(item, index);
     }
 
     // Private Methods
@@ -198,11 +212,8 @@ public class Board : MonoBehaviour
     // must be called before the item is actually moved
     private void SpawnPowerup(Item item)
     {
-        // create the powerup
-        Debug.Log($"Powerup index: {item.Index}");
-
         Powerup newPowerup = Instantiate(powerupPrefab, powerupParent.transform).GetComponent<Powerup>();
-        newPowerup.Initialize(item, powerupParent);
+        newPowerup.Initialize(item, itemParent);
 
         SubscribeObject(newPowerup);
         AddObjectToBoard(newPowerup, item.Index);
@@ -212,7 +223,13 @@ public class Board : MonoBehaviour
     {
         obj.MovObjReleased += HandleMovObjReleased;
 
+        if (obj.Type == MoveableType.PowerUp)
+        {
+            ((Powerup)obj).ItemSpawned += HandlePowerupItemSpawned;
+        }
+
         // consider adding on destroy handler to unsubscribe,
         // don't think this is necessary for now
-    } 
+    }
+
 }
