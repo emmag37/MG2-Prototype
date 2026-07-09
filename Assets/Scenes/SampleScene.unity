@@ -1941,6 +1941,7 @@ MonoBehaviour:
   - {fileID: 0}
   powerupPrefab: {fileID: 3867744714906874662, guid: d87e7be25325e4944979ba7f36745fc9, type: 3}
   powerupParent: {fileID: 171381295}
+  itemParent: {fileID: 1162946112}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
