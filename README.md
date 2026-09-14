@@ -53,4 +53,4 @@ __maybe subsection of a broader explanation of mg2__
 
 This prototype is a part of the MG2 game loop that is in **purple**.
 
-<img src="Assets/CoreGameLoop.png" width=300 alt="Core Game Loop">
+<img src="Assets/CoreGameLoop.png" width=500 alt="Core Game Loop">
