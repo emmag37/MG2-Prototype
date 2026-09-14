@@ -2,7 +2,9 @@
 
 The goal of this prototype is to create a standard merge board for MG2 concept that makes exploration more intrinsic to the merge game mechanic. Specifically, this prototype is play testing the integration of spawners into the board itself and the dig powerup.
 
-__maybe subsection of a broader explanation of mg2__
+## MG2 Concept Overview
+
+MG2 is hybrid casual game that blends merge mechanics, story, and pet simulation into a unique immersive experience where players unearth new objects, complete quests, and customize their pets.
 
 ## Screenshots
 
