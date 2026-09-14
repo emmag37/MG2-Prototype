@@ -2,11 +2,13 @@
 
 The goal of this prototype is to create a standard merge board for MG2 concept that makes exploration more intrinsic to the merge game mechanic. Specifically, this prototype is play testing the integration of spawners into the board itself and the dig powerup.
 
-__maybe subsection of a broader explanation of mg2__
+## MG2 Concept Overview
 
-## Screenshots
+MG2 is hybrid casual game that blends merge mechanics, story, and pet simulation into a unique immersive experience where players unearth new objects, complete quests, and customize their pets.
 
 ## Demo Video
+
+[<img src="Screenshots/gameplay.png" width="300" alt="Demo">](https://github.com/emmag37/MG2-Prototype/issues/1)
 
 ## Gameplay Elements
 
@@ -52,14 +54,5 @@ __maybe subsection of a broader explanation of mg2__
 4. Wait for refill on energy currency
 
 This prototype is a part of the MG2 game loop that is in **purple**.
-[<img src="Assets/CoreGameLoop" width=300 alt="Core Game Loop">]
 
-
-
-
-
-
-
-
-
-
+<img src="Assets/CoreGameLoop.png" width=500 alt="Core Game Loop">
