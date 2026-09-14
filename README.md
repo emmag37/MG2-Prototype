@@ -51,7 +51,8 @@ __maybe subsection of a broader explanation of mg2__
 3. New items earn rewards (potentially including energy currency indirectly)
 4. Wait for refill on energy currency
 
-__image of core loop__
+This prototype is a part of the MG2 game loop that is in **purple**.
+[<img src="Assets/CoreGameLoop" width=300 alt="Core Game Loop">]
 
 
 
