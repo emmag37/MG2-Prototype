@@ -1,6 +1,8 @@
 # MG2 Prototype #1
 
-Goal of this prototype is to create a standard merge board for MG2 concept that makes exploration more intrinsic to the merge game mechanic. Specifically, this prototype is play testing the integration of spawners into the board itself and the dig powerup.
+The goal of this prototype is to create a standard merge board for MG2 concept that makes exploration more intrinsic to the merge game mechanic. Specifically, this prototype is play testing the integration of spawners into the board itself and the dig powerup.
+
+__maybe subsection of a broader explanation of mg2__
 
 ## Screenshots
 
