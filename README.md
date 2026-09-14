@@ -6,9 +6,9 @@ The goal of this prototype is to create a standard merge board for MG2 concept t
 
 MG2 is hybrid casual game that blends merge mechanics, story, and pet simulation into a unique immersive experience where players unearth new objects, complete quests, and customize their pets.
 
-## Screenshots
-
 ## Demo Video
+
+[<img src="Screenshots/gameplay.png" width="300" alt="Demo">](https://github.com/emmag37/MG2-Prototype/issues/1)
 
 ## Gameplay Elements
 
