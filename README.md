@@ -53,6 +53,6 @@ MG2 is hybrid casual game that blends merge mechanics, story, and pet simulation
 3. New items earn rewards (potentially including energy currency indirectly)
 4. Wait for refill on energy currency
 
-This prototype is a part of the MG2 game loop that is in **purple**.
+This prototype represents the **purple** section of the MG2 game loop.
 
 <img src="Assets/CoreGameLoop.png" width=500 alt="Core Game Loop">
