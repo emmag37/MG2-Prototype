@@ -52,7 +52,7 @@ __maybe subsection of a broader explanation of mg2__
 4. Wait for refill on energy currency
 
 This prototype is a part of the MG2 game loop that is in **purple**.
-[<img src="Assets/CoreGameLoop" width=300 alt="Core Game Loop">]
+[<img src="Assets/CoreGameLoop.png" width=300 alt="Core Game Loop">]
 
 
 
