@@ -24,14 +24,13 @@ public class Board : MonoBehaviour
     [SerializeField] private GameObject itemParent;
 
     // Private Fields
-    private BoardGeometry boardGeometry;
     private int numEnergy;
     private int itemsMergedCounter = 0;
 
     // Unity Lifecycle
     void Awake()
     {
-        boardGeometry = new BoardGeometry(NumRows, NumCols, GetComponent<SpriteRenderer>().bounds, transform.position);
+        BoardGeometry.Initialize(NumRows, NumCols, GetComponent<SpriteRenderer>().bounds);
 
         // Subscribe to all the currently set moveable objects
         foreach (MoveableObject obj in moveableObjects)
@@ -69,7 +68,7 @@ public class Board : MonoBehaviour
         // set old spot to null first
         moveableObjects[TwoDimToFlatIndex(obj.Index)] = null;
 
-        Vector2Int index = boardGeometry.TransformToBoardIndex(position);
+        Vector2Int index = BoardGeometry.TransformToBoardIndex(position);
         int flatIndex = TwoDimToFlatIndex(index);
 
         // check for merge/swap objects if the index is filled
@@ -156,7 +155,7 @@ public class Board : MonoBehaviour
     {
         int flatIndex = TwoDimToFlatIndex(index);
 
-        Vector3 newPosition = boardGeometry.BoardIndexToTransform(index);
+        Vector3 newPosition = BoardGeometry.BoardIndexToTransform(index);
 
         obj.DropOnPosition(index, newPosition);
         moveableObjects[flatIndex] = obj;
